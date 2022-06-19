@@ -2,9 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Admin from './Admin';
 import reportWebVitals from './reportWebVitals';
 import { UALProvider, withUAL } from 'ual-reactjs-renderer'
 import { Anchor } from 'ual-anchor'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 const appName = "Fractal Voting";
 
@@ -31,13 +37,18 @@ const supportedAuthenticators = [
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UALProvider
-      chains={supportedChains}
-      authenticators={supportedAuthenticators}
-      appName={appName}
-    >
-      <App />
-    </UALProvider>
+    <BrowserRouter>
+        <UALProvider
+          chains={supportedChains}
+          authenticators={supportedAuthenticators}
+          appName={appName}
+        >
+          <Routes>
+            <Route path="/" element={<App />}/>
+            <Route path="/admin" element={<Admin />}/>
+          </Routes>
+        </UALProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
