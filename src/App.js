@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 
 
 function App(props) {
+  const [submitter, setSubmitter] = useState("")
+  const [groupnumber, setGroupnumber] = useState("")
   const [vote1, setVote1] = useState("")
   const [vote2, setVote2] = useState("")
   const [vote3, setVote3] = useState("")
@@ -19,12 +21,13 @@ function App(props) {
   const [accountname, setAccountName] = useState("");
   const vote = async() => {
     if (activeUser) {
+      let voterlist = [vote1, vote2, vote3, vote4, vote5, vote6]
       try {
         const transaction = {
           actions: [
             {
-              account: "consortiumtt",
-              name: "unstakeetf",
+              account: "edenfractest",
+              name: "submitcons",
               authorization: [
                 {
                   actor: displayaccountname(), // use account that was logged in
@@ -32,7 +35,9 @@ function App(props) {
                 },
               ],
               data: {
-                user: displayaccountname()
+                submitter: submitter,
+                groupNr: parseInt(groupnumber),
+                rankings: voterlist
               },
             },
           ],
@@ -117,6 +122,8 @@ function App(props) {
       }
       <header className="App-header">
       <Paper elevation={3} sx={{padding:"20px", width:"400px"}}>
+      <TextField onChange={(e) => setGroupnumber(e.target.value)} label="Group number" variant="outlined" sx={{width:"100%", "margin-bottom":"10px"}} />
+      <TextField onChange={(e) => setSubmitter(e.target.value)} label="Your name" variant="outlined" sx={{width:"100%", "margin-bottom":"10px"}} />
       <TextField onChange={(e) => setVote1(e.target.value)} label="Insert name 1" variant="outlined" sx={{width:"100%", "margin-bottom":"10px"}} />
       <TextField onChange={(e) => setVote2(e.target.value)} label="Insert name 2" variant="outlined" sx={{width:"100%", "margin-bottom":"10px"}} />
       <TextField onChange={(e) => setVote3(e.target.value)} label="Insert name 3" variant="outlined" sx={{width:"100%", "margin-bottom":"10px"}} />
