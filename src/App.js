@@ -8,7 +8,6 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 function App(props) {
-  //const [submitter, setSubmitter] = useState("");
   const [groupnumber, setGroupnumber] = useState("");
   const [vote1, setVote1] = useState("");
   const [vote2, setVote2] = useState("");
@@ -19,35 +18,68 @@ function App(props) {
   const [accountname, setAccountName] = useState("");
   const vote = async () => {
     if (activeUser) {
-      let voterlist = [vote1, vote2, vote3, vote4, vote5, vote6];
-      console.log(voterlist);
-      try {
-        const transaction = {
-          actions: [
-            {
-              account: "edenfractest",
-              name: "submitcons",
-              authorization: [
-                {
-                  actor: displayaccountname(), // use account that was logged in
-                  permission: "active",
+      // could be more elegant than if (vote6 == "")
+      if (vote6 == "") {
+        let voterlist = [vote5, vote4, vote3, vote2, vote1];
+        try {
+          const transaction = {
+            actions: [
+              {
+                account: "edenfractest",
+                name: "submitcons",
+                authorization: [
+                  {
+                    actor: displayaccountname(), // use account that was logged in
+                    permission: "active",
+                  },
+                ],
+                data: {
+                  submitter: displayaccountname(),
+                  groupnr: parseInt(groupnumber),
+                  rankings: voterlist,
                 },
-              ],
-              data: {
-                submitter: displayaccountname(),
-                groupnr: parseInt(groupnumber),
-                rankings: voterlist,
               },
-            },
-          ],
-        };
-        await activeUser.signTransaction(transaction, {
-          broadcast: true,
-          expireSeconds: 300,
-        });
-        swal_success(`Voted!`);
-      } catch (e) {
-        swal_error(e);
+            ],
+          };
+          await activeUser.signTransaction(transaction, {
+            broadcast: true,
+            expireSeconds: 300,
+          });
+          swal_success(`Successfully submitted!`);
+        } catch (e) {
+          swal_error(e);
+        }
+      } else {
+        let voterlist = [vote6, vote5, vote4, vote3, vote2, vote1];
+        console.log(voterlist);
+        try {
+          const transaction = {
+            actions: [
+              {
+                account: "edenfractest",
+                name: "submitcons",
+                authorization: [
+                  {
+                    actor: displayaccountname(), // use account that was logged in
+                    permission: "active",
+                  },
+                ],
+                data: {
+                  submitter: displayaccountname(),
+                  groupnr: parseInt(groupnumber),
+                  rankings: voterlist,
+                },
+              },
+            ],
+          };
+          await activeUser.signTransaction(transaction, {
+            broadcast: true,
+            expireSeconds: 300,
+          });
+          swal_success(`Successfully submitted!`);
+        } catch (e) {
+          swal_error(e);
+        }
       }
     }
   };
@@ -56,7 +88,7 @@ function App(props) {
       toast: true,
       position: "bottom-end",
       showConfirmButton: false,
-      timer: 6000,
+      timer: 8000,
       timerProgressBar: true,
       onOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -74,7 +106,7 @@ function App(props) {
       toast: true,
       position: "bottom-end",
       showConfirmButton: false,
-      timer: 6000,
+      timer: 8000,
       timerProgressBar: true,
       onOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
