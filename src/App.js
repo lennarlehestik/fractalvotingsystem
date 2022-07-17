@@ -181,37 +181,37 @@ function App(props) {
 
           <TextField
             onChange={(e) => setVote1(e.target.value)}
-            label="Rank 6"
+            label="Level 6"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
             onChange={(e) => setVote2(e.target.value)}
-            label="Rank 5"
+            label="Level 5"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
             onChange={(e) => setVote3(e.target.value)}
-            label="Rank 4"
+            label="Level 4"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
             onChange={(e) => setVote4(e.target.value)}
-            label="Rank 3"
+            label="Level 3"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
             onChange={(e) => setVote5(e.target.value)}
-            label="Rank 2"
+            label="Level 2"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
             onChange={(e) => setVote6(e.target.value)}
-            label="Rank 1"
+            label="Level 1"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
