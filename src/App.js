@@ -6,6 +6,9 @@ import Button from "@mui/material/Button";
 import { UALProvider, withUAL } from "ual-reactjs-renderer";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import { Modal } from "react-bootstrap";
 
 function App(props) {
   const [groupnumber, setGroupnumber] = useState("");
@@ -16,6 +19,13 @@ function App(props) {
   const [vote5, setVote5] = useState("");
   const [vote6, setVote6] = useState("");
   const [accountname, setAccountName] = useState("");
+  const [show23, setShow23] = useState(false);
+
+  const handleClose23 = () => {
+    setShow23(false);
+  };
+  const handleShow23 = () => setShow23(true);
+
   const vote = async () => {
     if (activeUser) {
       // could be more elegant than if (vote6 == "")
@@ -153,23 +163,51 @@ function App(props) {
 
   return (
     <div className="App">
-      {accountname == "" ? (
-        <Button
-          variant="contained"
-          sx={{ position: "absolute", top: "20px", right: "20px" }}
-          onClick={() => showModal()}
-        >
-          Log in
-        </Button>
-      ) : (
-        <Button
-          variant="contained"
-          sx={{ position: "absolute", top: "20px", right: "20px" }}
-          onClick={() => logmeout()}
-        >
-          {displayaccountname()}
-        </Button>
-      )}
+      <AppBar
+        position="fixed"
+        color="transparent"
+        style={{
+          "background-color": "white",
+          height: "64px",
+        }}
+      >
+        <Toolbar>
+          <Button
+            sx={{ position: "absolute", right: "180px" }}
+            style={{
+              color: "inherit",
+            }}
+            onClick={handleShow23}
+            //onClick={() => handleShow23()}
+          >
+            Sign the agreement
+          </Button>
+          {accountname == "" ? (
+            <Button
+              sx={{ position: "absolute", right: "40px" }}
+              style={{
+                color: "inherit",
+                //left: "1600px",
+                float: "right",
+
+                "border-radius": "50px",
+              }}
+              onClick={() => showModal()}
+            >
+              Log in
+            </Button>
+          ) : (
+            <Button
+              sx={{ position: "absolute", right: "40px" }}
+              style={{ color: "inherit", "border-radius": "50px" }}
+              onClick={() => logmeout()}
+            >
+              {displayaccountname()}
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+
       <header className="App-header">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
           <TextField
@@ -224,6 +262,26 @@ function App(props) {
           </Button>
         </Paper>
       </header>
+      <div class="frontapp">
+        <div>
+          <Modal show={show23} onHide={handleClose23}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Woohoo, you're reading this text in a modal!
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose23}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleClose23}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      </div>
     </div>
   );
 }
