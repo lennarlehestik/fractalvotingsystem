@@ -43,7 +43,7 @@ function App(props) {
         const transaction = {
           actions: [
             {
-              account: "edenfractest",
+              account: "eden.fractal",
               name: "sign",
               authorization: [
                 {
@@ -77,7 +77,7 @@ function App(props) {
           const transaction = {
             actions: [
               {
-                account: "edenfractest",
+                account: "eden.fractal",
                 name: "submitcons",
                 authorization: [
                   {
@@ -108,7 +108,7 @@ function App(props) {
           const transaction = {
             actions: [
               {
-                account: "edenfractest",
+                account: "eden.fractal",
                 name: "submitcons",
                 authorization: [
                   {
