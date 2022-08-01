@@ -8,18 +8,17 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   borderRadius: "15px",
   boxShadow: 24,
   p: 4,
@@ -37,6 +36,37 @@ function App(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const sign = async () => {
+    if (activeUser) {
+      try {
+        const transaction = {
+          actions: [
+            {
+              account: "edenfractest",
+              name: "sign",
+              authorization: [
+                {
+                  actor: displayaccountname(), // use account that was logged in
+                  permission: "active",
+                },
+              ],
+              data: {
+                signer: displayaccountname(),
+              },
+            },
+          ],
+        };
+        await activeUser.signTransaction(transaction, {
+          broadcast: true,
+          expireSeconds: 300,
+        });
+        swal_success(`Successfully submitted!`);
+      } catch (e) {
+        swal_error(e);
+      }
+    }
+  };
 
   const vote = async () => {
     if (activeUser) {
@@ -183,11 +213,27 @@ function App(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Eden Contributor Agreement{" "}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Agreement could be accessed via this{" "}
+            <a
+              href="https://eosauthority.com/account/edenfractest?network=eos&scope=edenfractest&table=agreement&limit=10&index_position=1&key_type=i64&reverse=0&mode=contract&sub=tables"
+              target="_blank"
+            >
+              {" "}
+              link
+            </a>
+            . By clicking sign you agree to the terms of the agreement.
           </Typography>
+          <br></br>
+          <Button
+            variant="contained"
+            sx={{ width: "100%" }}
+            onClick={() => sign()}
+          >
+            Sign
+          </Button>
         </Box>
       </Modal>
       <AppBar
@@ -234,7 +280,6 @@ function App(props) {
           )}
         </Toolbar>
       </AppBar>
-
 
       <header className="App-header">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
