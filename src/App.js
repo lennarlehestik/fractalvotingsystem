@@ -8,7 +8,22 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Modal } from "react-bootstrap";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  borderRadius: "15px",
+  boxShadow: 24,
+  p: 4,
+};
 
 function App(props) {
   const [groupnumber, setGroupnumber] = useState("");
@@ -19,12 +34,9 @@ function App(props) {
   const [vote5, setVote5] = useState("");
   const [vote6, setVote6] = useState("");
   const [accountname, setAccountName] = useState("");
-  const [show23, setShow23] = useState(false);
-
-  const handleClose23 = () => {
-    setShow23(false);
-  };
-  const handleShow23 = () => setShow23(true);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const vote = async () => {
     if (activeUser) {
@@ -163,6 +175,21 @@ function App(props) {
 
   return (
     <div className="App">
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal>
       <AppBar
         position="fixed"
         color="transparent"
@@ -177,7 +204,7 @@ function App(props) {
             style={{
               color: "inherit",
             }}
-            onClick={handleShow23}
+            onClick={handleOpen}
             //onClick={() => handleShow23()}
           >
             Sign the agreement
@@ -207,6 +234,7 @@ function App(props) {
           )}
         </Toolbar>
       </AppBar>
+
 
       <header className="App-header">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
@@ -262,26 +290,6 @@ function App(props) {
           </Button>
         </Paper>
       </header>
-      <div class="frontapp">
-        <div>
-          <Modal show={show23} onHide={handleClose23}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Woohoo, you're reading this text in a modal!
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose23}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleClose23}>
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
-      </div>
     </div>
   );
 }
