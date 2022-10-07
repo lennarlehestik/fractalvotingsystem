@@ -25,6 +25,7 @@ const style = {
 };
 
 function App(props) {
+  const [delegate, setDelegate] = useState("");
   const [groupnumber, setGroupnumber] = useState("");
   const [vote1, setVote1] = useState("");
   const [vote2, setVote2] = useState("");
@@ -91,6 +92,21 @@ function App(props) {
                   rankings: voterlist,
                 },
               },
+              {
+                account: "edenfractest",
+                name: "electdeleg",
+                authorization: [
+                  {
+                    actor: displayaccountname(), // use account that was logged in
+                    permission: "active",
+                  },
+                ],
+                data: {
+                  elector: displayaccountname(),
+                  delegate: delegate,
+                  groupnr: parseInt(groupnumber),
+                },
+              },
             ],
           };
           await activeUser.signTransaction(transaction, {
@@ -122,7 +138,23 @@ function App(props) {
                   rankings: voterlist,
                 },
               },
+              {
+                account: "edenfractest",
+                name: "electdeleg",
+                authorization: [
+                  {
+                    actor: displayaccountname(), // use account that was logged in
+                    permission: "active",
+                  },
+                ],
+                data: {
+                  elector: displayaccountname(),
+                  delegate: delegate,
+                  groupnr: parseInt(groupnumber),
+                },
+              },
             ],
+
           };
           await activeUser.signTransaction(transaction, {
             broadcast: true,
@@ -251,7 +283,7 @@ function App(props) {
               color: "inherit",
             }}
             onClick={handleOpen}
-            //onClick={() => handleShow23()}
+          //onClick={() => handleShow23()}
           >
             Sign the agreement
           </Button>
@@ -270,19 +302,25 @@ function App(props) {
               Log in
             </Button>
           ) : (
-            <Button
-              sx={{ position: "absolute", right: "40px" }}
-              style={{ color: "inherit", "border-radius": "50px" }}
-              onClick={() => logmeout()}
-            >
-              {displayaccountname()}
-            </Button>
-          )}
+              <Button
+                sx={{ position: "absolute", right: "40px" }}
+                style={{ color: "inherit", "border-radius": "50px" }}
+                onClick={() => logmeout()}
+              >
+                {displayaccountname()}
+              </Button>
+            )}
         </Toolbar>
       </AppBar>
 
       <header className="App-header">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
+          <TextField
+            onChange={(e) => setDelegate(e.target.value)}
+            label="Delegate"
+            variant="outlined"
+            sx={{ width: "100%", "margin-bottom": "10px" }}
+          />
           <TextField
             onChange={(e) => setGroupnumber(e.target.value)}
             label="Group number"
