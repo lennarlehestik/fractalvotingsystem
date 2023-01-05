@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 // TODO: remove if you use react hooks?
 import copy from "copy-to-clipboard";
 import { useSearchParamsState } from 'react-use-search-params-state'
+import * as objectSha from 'object-sha'
 
 const style = {
   position: "absolute",
@@ -39,6 +40,7 @@ const inputDefaults = {
 }
 
 function App(props) {
+  console.log("props: ", props);
 
   const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
@@ -78,6 +80,14 @@ function App(props) {
   };
 
   const vote = async () => {
+    console.log(inputs);
+    const hashable = objectSha.hashable(inputs);
+    const inputsHash = await objectSha.digest(hashable, 'SHA-256');
+    const displayedId = inputsHash.substring(0, 2) + " " + inputsHash.substring(2, 4) +
+      " " + inputsHash.substring(4, 6) + " " + inputsHash.substring(6, 8);
+    console.log("hashable: ", hashable);
+    console.log("inputs hash: ", inputsHash);
+    console.log("displayed id: ", displayedId);
     if (activeUser) {
       // could be more elegant than if (vote6 == "")
       if (inputs.vote6 == "") {
@@ -127,7 +137,6 @@ function App(props) {
         }
       } else {
         let voterlist = [inputs.vote6, inputs.vote5, inputs.vote4, inputs.vote3, inputs.vote2, inputs.vote1];
-        console.log(voterlist);
         try {
           const transaction = {
             actions: [
