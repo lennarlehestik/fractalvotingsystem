@@ -274,9 +274,9 @@ function App(props) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please make sure submission represents consensus of a group.
             <br/><br/>
-            To help with that check with other members if they see the same character sequence here: <b>{consensusId}</b>
+            To help with that, check with other members if they see the same character sequence here: <b>{consensusId}</b>
             <br/><br/>
-            If it's the same your submissions are identical.
+            If it's the same your submissions are identical (so you're in consensus).
           </Typography>
           <br></br>
           <Button
