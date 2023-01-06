@@ -40,8 +40,6 @@ const inputDefaults = {
 }
 
 function App(props) {
-  console.log("props: ", props);
-
   const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
   const [consensusId, setConsensusId] = useState("");
@@ -186,7 +184,6 @@ function App(props) {
   };
   const shareLink = () => {
     const url = window.location.href;
-    console.log('Url: ', url);
 
     if (copy(url, { debug: true })) {
       swal_success("Link copied to clipboard!");
