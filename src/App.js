@@ -48,6 +48,8 @@ function App(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
+  
   const sign = async () => {
     if (activeUser) {
       try {
@@ -272,26 +274,23 @@ function App(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Eden Contributor Agreement{" "}
+            This is Patrick speaking...{" "}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Agreement could be accessed via this{" "}
-            <a
-              href="https://eosauthority.com/account/edenfractest?network=eos&scope=edenfractest&table=agreement&limit=10&index_position=1&key_type=i64&reverse=0&mode=contract&sub=tables"
-              target="_blank"
-            >
-              {" "}
-              link
-            </a>
-            . By clicking sign you agree to the terms of the agreement.
+            Please make sure submitted accounts are in the correct order.
+           
+
+          
+
           </Typography>
           <br></br>
           <Button
             variant="contained"
             sx={{ width: "100%" }}
-            onClick={() => sign()}
+            //onClick={() => sign()}
+            onClick={() => vote()}
           >
-            Sign
+            Yeah baby, push it on chain!
           </Button>
         </Box>
       </Modal>
@@ -309,10 +308,10 @@ function App(props) {
             style={{
               color: "inherit",
             }}
-            onClick={handleOpen}
+          //onClick={handleOpen}
           //onClick={() => handleShow23()}
           >
-            Sign the agreement
+            Code is law
           </Button>
           {accountname == "" ? (
             <Button
@@ -401,8 +400,9 @@ function App(props) {
           />
           <Button
             variant="contained"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
-            onClick={() => vote()}
+            sx={{ width: "100%" }}
+
+            onClick={handleOpen}
           >
             Submit
           </Button>
