@@ -11,6 +11,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+// TODO: remove if you use react hooks?
+import copy from "copy-to-clipboard";
+import { useSearchParamsState } from 'react-use-search-params-state'
 
 const style = {
   position: "absolute",
@@ -24,15 +27,20 @@ const style = {
   p: 4,
 };
 
+const inputDefaults = {
+  delegate: { type: 'string', default: "" },
+  groupnumber: { type: 'number', default: null },
+  vote1: { type: 'string', default: "" },
+  vote2: { type: 'string', default: "" },
+  vote3: { type: 'string', default: "" },
+  vote4: { type: 'string', default: "" },
+  vote5: { type: 'string', default: "" },
+  vote6: { type: 'string', default: "" },
+}
+
 function App(props) {
-  const [delegate, setDelegate] = useState("");
-  const [groupnumber, setGroupnumber] = useState("");
-  const [vote1, setVote1] = useState("");
-  const [vote2, setVote2] = useState("");
-  const [vote3, setVote3] = useState("");
-  const [vote4, setVote4] = useState("");
-  const [vote5, setVote5] = useState("");
-  const [vote6, setVote6] = useState("");
+
+  const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -74,8 +82,8 @@ function App(props) {
   const vote = async () => {
     if (activeUser) {
       // could be more elegant than if (vote6 == "")
-      if (vote6 == "") {
-        let voterlist = [vote5, vote4, vote3, vote2, vote1];
+      if (inputs.vote6 == "") {
+        let voterlist = [inputs.vote5, inputs.vote4, inputs.vote3, inputs.vote2, inputs.vote1];
         try {
           const transaction = {
             actions: [
@@ -90,7 +98,7 @@ function App(props) {
                 ],
                 data: {
                   submitter: displayaccountname(),
-                  groupnr: parseInt(groupnumber),
+                  groupnr: parseInt(inputs.groupnumber),
                   rankings: voterlist,
                 },
               },
@@ -105,8 +113,8 @@ function App(props) {
                 ],
                 data: {
                   elector: displayaccountname(),
-                  delegate: delegate,
-                  groupnr: parseInt(groupnumber),
+                  delegate: inputs.delegate,
+                  groupnr: parseInt(inputs.groupnumber),
                 },
               },
             ],
@@ -120,7 +128,7 @@ function App(props) {
           swal_error(e);
         }
       } else {
-        let voterlist = [vote6, vote5, vote4, vote3, vote2, vote1];
+        let voterlist = [inputs.vote6, inputs.vote5, inputs.vote4, inputs.vote3, inputs.vote2, inputs.vote1];
         console.log(voterlist);
         try {
           const transaction = {
@@ -136,7 +144,7 @@ function App(props) {
                 ],
                 data: {
                   submitter: displayaccountname(),
-                  groupnr: parseInt(groupnumber),
+                  groupnr: parseInt(inputs.groupnumber),
                   rankings: voterlist,
                 },
               },
@@ -151,8 +159,8 @@ function App(props) {
                 ],
                 data: {
                   elector: displayaccountname(),
-                  delegate: delegate,
-                  groupnr: parseInt(groupnumber),
+                  delegate: inputs.delegate,
+                  groupnr: parseInt(inputs.groupnumber),
                 },
               },
             ],
@@ -169,6 +177,16 @@ function App(props) {
       }
     }
   };
+  const shareLink = () => {
+    const url = window.location.href;
+    console.log('Url: ', url);
+
+    if (copy(url, { debug: true })) {
+      swal_success("Link copied to clipboard!");
+    } else {
+      swal_error("Were not able to copy to cliboard.");
+    }
+  }
   const swal_success = (message) => {
     const Toast = Swal.mixin({
       toast: true,
@@ -315,50 +333,58 @@ function App(props) {
       <header className="App-header">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
           <TextField
-            onChange={(e) => setDelegate(e.target.value)}
+            onChange={(e) => setInputs({ delegate: e.target.value })}
+            defaultValue={inputs.delegate ?? ""}
             label="Delegate"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setGroupnumber(e.target.value)}
+            onChange={(e) => setInputs({ groupnumber: e.target.value })}
+            defaultValue={inputs.groupnumber ?? ""}
             label="Group number"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
 
           <TextField
-            onChange={(e) => setVote1(e.target.value)}
+            onChange={(e) => setInputs({ vote1: e.target.value })}
+            defaultValue={inputs.vote1 ?? ""}
             label="Level 6"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setVote2(e.target.value)}
+            onChange={(e) => setInputs({ vote2: e.target.value })}
+            defaultValue={inputs.vote2 ?? ""}
             label="Level 5"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setVote3(e.target.value)}
+            onChange={(e) => setInputs({ vote3: e.target.value })}
+            defaultValue={inputs.vote3 ?? ""}
             label="Level 4"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setVote4(e.target.value)}
+            onChange={(e) => setInputs({ vote4: e.target.value })}
+            defaultValue={inputs.vote4 ?? ""}
             label="Level 3"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setVote5(e.target.value)}
+            onChange={(e) => setInputs({ vote5: e.target.value })}
+            defaultValue={inputs.vote5 ?? ""}
             label="Level 2"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
-            onChange={(e) => setVote6(e.target.value)}
+            onChange={(e) => setInputs({ vote6: e.target.value })}
+            defaultValue={inputs.vote6 ?? ""}
             label="Level 1"
             variant="outlined"
             sx={{ width: "100%", "margin-bottom": "10px" }}
@@ -370,6 +396,13 @@ function App(props) {
             onClick={handleOpen}
           >
             Submit
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ width: "100%" }}
+            onClick={() => shareLink()}
+          >
+            Share
           </Button>
         </Paper>
       </header>
