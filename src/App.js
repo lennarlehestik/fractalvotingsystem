@@ -44,11 +44,17 @@ function App(props) {
 
   const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
+  const [consensusId, setConsensusId] = useState("");
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+  const handleOpen = async () => {
+    const hashable = objectSha.hashable(inputs);
+    const inputsHash = await objectSha.digest(hashable, 'SHA-256');
+    setConsensusId(inputsHash.substring(0, 2) + " " + inputsHash.substring(2, 4) +
+      " " + inputsHash.substring(4, 6) + " " + inputsHash.substring(6, 8));
+    setOpen(true);
+  }
   
   const sign = async () => {
     if (activeUser) {
@@ -82,14 +88,6 @@ function App(props) {
   };
 
   const vote = async () => {
-    console.log(inputs);
-    const hashable = objectSha.hashable(inputs);
-    const inputsHash = await objectSha.digest(hashable, 'SHA-256');
-    const displayedId = inputsHash.substring(0, 2) + " " + inputsHash.substring(2, 4) +
-      " " + inputsHash.substring(4, 6) + " " + inputsHash.substring(6, 8);
-    console.log("hashable: ", hashable);
-    console.log("inputs hash: ", inputsHash);
-    console.log("displayed id: ", displayedId);
     if (activeUser) {
       // could be more elegant than if (vote6 == "")
       if (inputs.vote6 == "") {
@@ -277,11 +275,11 @@ function App(props) {
             This is Patrick speaking...{" "}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Please make sure submitted accounts are in the correct order.
-           
-
-          
-
+            Please make sure submission represents consensus of a group.
+            <br/><br/>
+            To help with that check with other members if they see the same character sequence here: <b>{consensusId}</b>
+            <br/><br/>
+            If it's the same your submissions are identical.
           </Typography>
           <br></br>
           <Button
