@@ -7338,7 +7338,7 @@ object-assign@^4.1.1:
 
 object-hash@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-3.0.0.tgz#73f97f753e7baffc0e2cc9d6e079079744ac82e9"
   integrity sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==
 
 object-inspect@^1.12.0, object-inspect@^1.9.0:
@@ -7350,6 +7350,11 @@ object-keys@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
+
+object-sha@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/object-sha/-/object-sha-2.0.7.tgz#7099fe4f235cac8ffde5eb495270e65661278839"
+  integrity sha512-APUZVj07TvLdWY8qYq9LVweBuLz/wqImaQJ92Wt+Pjjw79/75vr/GVZ2Q7wngvahOXY98PFt7f9WmW3cuTLk4w==
 
 object-visit@^1.0.0:
   version "1.0.1"

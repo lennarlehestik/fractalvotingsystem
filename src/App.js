@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 // TODO: remove if you use react hooks?
 import copy from "copy-to-clipboard";
 import { useSearchParamsState } from 'react-use-search-params-state'
+import * as objectSha from 'object-sha'
 
 const style = {
   position: "absolute",
@@ -39,14 +40,19 @@ const inputDefaults = {
 }
 
 function App(props) {
-
   const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
+  const [consensusId, setConsensusId] = useState("");
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+  const handleOpen = async () => {
+    const hashable = objectSha.hashable(inputs);
+    const inputsHash = await objectSha.digest(hashable, 'SHA-256');
+    setConsensusId(inputsHash.substring(0, 2) + " " + inputsHash.substring(2, 4) +
+      " " + inputsHash.substring(4, 6) + " " + inputsHash.substring(6, 8));
+    setOpen(true);
+  }
   
   const sign = async () => {
     if (activeUser) {
@@ -129,7 +135,6 @@ function App(props) {
         }
       } else {
         let voterlist = [inputs.vote6, inputs.vote5, inputs.vote4, inputs.vote3, inputs.vote2, inputs.vote1];
-        console.log(voterlist);
         try {
           const transaction = {
             actions: [
@@ -179,7 +184,6 @@ function App(props) {
   };
   const shareLink = () => {
     const url = window.location.href;
-    console.log('Url: ', url);
 
     if (copy(url, { debug: true })) {
       swal_success("Link copied to clipboard!");
@@ -268,11 +272,11 @@ function App(props) {
             This is Patrick speaking...{" "}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Please make sure submitted accounts are in the correct order.
-           
-
-          
-
+            Please make sure submission represents consensus of a group.
+            <br/><br/>
+            To help with that, check with other members if they see the same character sequence here: <b>{consensusId}</b>
+            <br/><br/>
+            If it's the same your submissions are identical (so you're in consensus).
           </Typography>
           <br></br>
           <Button
