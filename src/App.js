@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { UALProvider, withUAL } from "ual-reactjs-renderer";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import copy from "copy-to-clipboard";
 import { useSearchParamsState } from 'react-use-search-params-state'
 import * as objectSha from 'object-sha'
+import { CSSTransition } from "react-transition-group";
 
 const style = {
   position: "absolute",
@@ -40,11 +41,17 @@ const inputDefaults = {
 }
 
 function App(props) {
+
+  const [landing, setLanding] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
   const [inputs, setInputs] = useSearchParamsState(inputDefaults); 
   const [accountname, setAccountName] = useState("");
   const [consensusId, setConsensusId] = useState("");
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const nodeRef = useRef(null);
+
 
   const handleOpen = async () => {
     const hashable = objectSha.hashable(inputs);
@@ -53,7 +60,7 @@ function App(props) {
       " " + inputsHash.substring(4, 6) + " " + inputsHash.substring(6, 8));
     setOpen(true);
   }
-  
+  /*
   const sign = async () => {
     if (activeUser) {
       try {
@@ -84,7 +91,7 @@ function App(props) {
       }
     }
   };
-
+*/
   const vote = async () => {
     if (activeUser) {
       // could be more elegant than if (vote6 == "")
@@ -191,10 +198,12 @@ function App(props) {
       swal_error("Were not able to copy to cliboard.");
     }
   }
+  
   const swal_success = (message) => {
     const Toast = Swal.mixin({
       toast: true,
       position: "bottom-end",
+      background: '#190087',
       showConfirmButton: false,
       timer: 8000,
       timerProgressBar: true,
@@ -205,7 +214,7 @@ function App(props) {
     });
     Toast.fire({
       icon: "success",
-      title: message,
+      title: "<div style='color:white'>" + message + "</div>",
     });
   };
 
@@ -214,6 +223,7 @@ function App(props) {
       toast: true,
       position: "bottom-end",
       showConfirmButton: false,
+      background: '#190087',
       timer: 8000,
       timerProgressBar: true,
       onOpen: (toast) => {
@@ -223,7 +233,7 @@ function App(props) {
     });
     Toast.fire({
       icon: "error",
-      title: message,
+      title: "<div style='color:white'>" + message + "</div>",
     });
   };
 
@@ -261,6 +271,29 @@ function App(props) {
 
   return (
     <div className="App">
+      {showButton &&
+        <header className="App-header">
+
+          <div class="zeos">EDEN<br /><div class="fractal">FRACTAL</div></div>
+          <img src="zeoslogo.svg" width="10%" class="logo" />
+          <button class="button-64 votebutton" role="button" onClick={() => setLanding(true)}><span class="text">Continue</span></button>
+          <div class="bg-animation">
+            <div id="stars"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+            <div id="stars4"></div>
+          </div>
+        </header>
+      }
+      <CSSTransition
+        in={landing}
+        nodeRef={nodeRef}
+        timeout={300}
+        classNames="alert"
+        unmountOnExit
+        onEnter={() => setShowButton(false)}
+      >
+        <div ref={nodeRef}>
       <Modal
         open={open}
         onClose={handleClose}
@@ -289,58 +322,28 @@ function App(props) {
           </Button>
         </Box>
       </Modal>
-      <AppBar
-        position="fixed"
-        color="transparent"
-        style={{
-          "background-color": "white",
-          height: "64px",
-        }}
-      >
-        <Toolbar>
-          <Button
-            sx={{ position: "absolute", right: "180px" }}
-            style={{
-              color: "inherit",
-            }}
-          //onClick={handleOpen}
-          //onClick={() => handleShow23()}
-          >
-            Code is law
-          </Button>
-          {accountname == "" ? (
-            <Button
-              sx={{ position: "absolute", right: "40px" }}
-              style={{
-                color: "inherit",
-                //left: "1600px",
-                float: "right",
-
-                "border-radius": "50px",
-              }}
-              onClick={() => showModal()}
-            >
-              Log in
-            </Button>
-          ) : (
-              <Button
-                sx={{ position: "absolute", right: "40px" }}
-                style={{ color: "inherit", "border-radius": "50px" }}
-                onClick={() => logmeout()}
-              >
-                {displayaccountname()}
-              </Button>
-            )}
-        </Toolbar>
-      </AppBar>
+      <div class="main-menu">
+           
+            {accountname == "" ? (
+              <button onClick={() => showModal()} className="menu-trigger">
+                <span>Sign in</span>
+              </button>
+            ) : (
+                <button onClick={() => logmeout()} className="menu-trigger">
+                  <span>{displayaccountname()}</span>
+                </button>
+              )}
+          </div>
 
       <header className="App-header">
+      <div class="input-wrapper">
         <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
           <TextField
             onChange={(e) => setInputs({ delegate: e.target.value })}
             defaultValue={inputs.delegate ?? ""}
             label="Delegate"
             variant="outlined"
+            //class="input-field"   //<div class="input-wrapper">
             sx={{ width: "100%", "margin-bottom": "10px" }}
           />
           <TextField
@@ -409,8 +412,13 @@ function App(props) {
             Share
           </Button>
         </Paper>
+        </div>
+
       </header>
+      </div>
+      </CSSTransition>
     </div>
+    
   );
 }
 
