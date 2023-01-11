@@ -278,6 +278,11 @@
   gap: 0.5vw;
 }
 
+.css-r8kun1{
+  background-color:rgb(34, 16, 108) !important;
+  color:white;
+}
+
 .input-top {
   width: 20vw;
   max-width: 20vw;
@@ -339,7 +344,7 @@
   }
 
   .button-64 {
-    width: 60.4vw;
+    width: 90.4vw;
   }
 
   .logo {
