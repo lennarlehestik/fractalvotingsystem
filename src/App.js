@@ -274,8 +274,8 @@ function App(props) {
       {showButton &&
         <header className="App-header">
 
-          <div class="zeos"><img src="edenlogo1.png" width="300px"/></div>
-          <img src="edensymbol.png" width="10%" class="logo" />
+          <div class="zeos"><img src="edenlogo1.png" width="350px"/></div>
+          <img src="edensymbol.png" width="18%" class="logo" />
           <button class="button-64 votebutton" role="button" onClick={() => setLanding(true)}><span class="text">Continue</span></button>
           <div class="bg-animation">
             <div id="stars"></div>
@@ -301,8 +301,8 @@ function App(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            This is Patrick speaking...{" "}
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+            {" "}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Please make sure submission represents consensus of a group.
@@ -312,16 +312,35 @@ function App(props) {
             If it's the same your submissions are identical (so you're in consensus).
           </Typography>
           <br></br>
-          <button
-            variant="contained"
-            class="button-64 button-64-varwidth"
-            //onClick={() => sign()}
-            onClick={() => vote()}
-          >
-            <span>
-            Yeah baby, push it on chain!
-            </span>
-          </button>
+          
+
+          {accountname == "" ? (
+                       <button
+                       variant="contained"
+                       class="button-64 button-64-varwidth"
+                       //onClick={() => sign()}
+                       
+                       onClick={() => showModal()}
+                       
+                     >
+                       <span>
+                       Sign in
+                       </span>
+                     </button>
+                    ) : (
+                      <button
+                      variant="contained"
+                      class="button-64 button-64-varwidth"
+                      //onClick={() => sign()}
+                      
+                      onClick={() => vote()}
+                      
+                    >
+                      <span>
+                      Yeah baby, push it on chain!
+                      </span>
+                    </button>
+                      )}
         </Box>
       </Modal>
       <div class="main-menu">
