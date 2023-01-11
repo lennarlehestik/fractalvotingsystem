@@ -195,7 +195,7 @@ function App(props) {
     if (copy(url, { debug: true })) {
       swal_success("Link copied to clipboard!");
     } else {
-      swal_error("Were not able to copy to cliboard.");
+      swal_error("Were not able to copy to clipboard.");
     }
   }
   
@@ -274,8 +274,8 @@ function App(props) {
       {showButton &&
         <header className="App-header">
 
-          <div class="zeos">EDEN<br /><div class="fractal">FRACTAL</div></div>
-          <img src="zeoslogo.svg" width="10%" class="logo" />
+          <div class="zeos"><img src="edenlogo1.png" width="300px"/></div>
+          <img src="edensymbol.png" width="10%" class="logo" />
           <button class="button-64 votebutton" role="button" onClick={() => setLanding(true)}><span class="text">Continue</span></button>
           <div class="bg-animation">
             <div id="stars"></div>
