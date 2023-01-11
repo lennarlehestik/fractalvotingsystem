@@ -312,14 +312,16 @@ function App(props) {
             If it's the same your submissions are identical (so you're in consensus).
           </Typography>
           <br></br>
-          <Button
+          <button
             variant="contained"
-            sx={{ width: "100%" }}
+            class="button-64 button-64-varwidth"
             //onClick={() => sign()}
             onClick={() => vote()}
           >
+            <span>
             Yeah baby, push it on chain!
-          </Button>
+            </span>
+          </button>
         </Box>
       </Modal>
       <div class="main-menu">
@@ -336,84 +338,96 @@ function App(props) {
           </div>
 
       <header className="App-header">
-      <div class="input-wrapper">
-        <Paper elevation={3} sx={{ padding: "20px", width: "400px" }}>
-          <TextField
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ delegate: e.target.value })}
             defaultValue={inputs.delegate ?? ""}
             label="Delegate"
-            variant="outlined"
-            //class="input-field"   //<div class="input-wrapper">
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Delegate"
+            class="input-field"
+
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ groupnumber: e.target.value })}
             defaultValue={inputs.groupnumber ?? ""}
             label="Group number"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
-          />
+            placeholder="Group number"
+            class="input-field"
 
-          <TextField
+          />
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote1: e.target.value })}
             defaultValue={inputs.vote1 ?? ""}
             label="Level 6"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 6"
+            class="input-field"
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote2: e.target.value })}
             defaultValue={inputs.vote2 ?? ""}
             label="Level 5"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 5"
+            class="input-field"
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote3: e.target.value })}
             defaultValue={inputs.vote3 ?? ""}
             label="Level 4"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 4"
+            class="input-field"
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote4: e.target.value })}
             defaultValue={inputs.vote4 ?? ""}
             label="Level 3"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 3"
+            class="input-field"
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote5: e.target.value })}
             defaultValue={inputs.vote5 ?? ""}
             label="Level 2"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 2"
+            class="input-field"
           />
-          <TextField
+          </div>
+          <div class="input-wrapper">
+          <input
             onChange={(e) => setInputs({ vote6: e.target.value })}
             defaultValue={inputs.vote6 ?? ""}
             label="Level 1"
-            variant="outlined"
-            sx={{ width: "100%", "margin-bottom": "10px" }}
+            placeholder="Level 1"
+            class="input-field"
           />
-          <Button
-            variant="contained"
-            sx={{ width: "100%" }}
-
+          </div>
+          <button
+            class="button-64"
             onClick={handleOpen}
           >
+            <span class="text">
             Submit
-          </Button>
-          <Button
-            variant="contained"
-            sx={{ width: "100%" }}
+            </span>
+          </button>
+          <button
+            class="button-64"
             onClick={() => shareLink()}
           >
+            <span class="text">
             Share
-          </Button>
-        </Paper>
-        </div>
-
+            </span>
+          </button>
       </header>
       </div>
       </CSSTransition>
