@@ -344,6 +344,9 @@ function App(props) {
         </Box>
       </Modal>
       <div class="main-menu">
+      <button onClick={() => window.open(`https://mindweb.io/EdenFractalProposals.html`, "_blank")} className="menu-trigger">
+                <span>Mindmap</span>
+              </button>
            
             {accountname == "" ? (
               <button onClick={() => showModal()} className="menu-trigger">
@@ -354,6 +357,9 @@ function App(props) {
                   <span>{displayaccountname()}</span>
                 </button>
               )}
+
+
+              
           </div>
 
       <header className="App-header">
